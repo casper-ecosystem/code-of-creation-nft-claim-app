@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Move into Client Directory
+        run: cd client/
+
       - name: Install dependencies
         run: npm install
 
