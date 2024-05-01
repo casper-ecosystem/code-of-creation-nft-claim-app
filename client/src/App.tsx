@@ -41,10 +41,10 @@ const App = () => {
 		clickRef?.on('csprclick:switched_account', (evt: any) => {
 			setActiveAccount(evt.account);
 		});
-		clickRef?.on('csprclick:signed_out', (evt: any) => {
+		clickRef?.on('csprclick:signed_out', () => {
 			setActiveAccount(null);
 		});
-		clickRef?.on('csprclick:disconnected', (evt: any) => {
+		clickRef?.on('csprclick:disconnected', () => {
 			setActiveAccount(null);
 		});
 	}, [clickRef?.on]);
