@@ -40,6 +40,21 @@ export class UserController {
         }
     }
 
+    async max(request: Request, response: Response, next: NextFunction) {
+        try {
+            const userCount = await this.userRepository.count();
+
+            if (userCount >= 500) {
+                response.send("true");
+            } else {
+                response.send("false");
+            }
+        } catch (error) {
+            console.error(error);
+        response.sendStatus(500);
+        }
+    }
+
     async destroy(request: Request, response: Response, next: NextFunction) {
         await this.userRepository.clear()
         response.sendStatus(200);

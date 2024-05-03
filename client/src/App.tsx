@@ -7,7 +7,8 @@ import { AppTheme } from './theme';
 import { Welcome } from './components/Welcome';
 import Instructions from './components/Instructions';
 import Success from './components/Success';
-import { checkUser } from './apiClient';
+import { checkMax, checkUser } from './apiClient';
+import Maxed from './components/Maxed';
 
 export const ActiveAccountContext = createContext(null);
 
@@ -33,6 +34,7 @@ const App = () => {
 	const [themeMode, setThemeMode] = useState<ThemeModeType>(ThemeModeType.light);
 	const [activeAccount, setActiveAccount] = useState<any>(null);
 	const [claimed, setClaimed] = useState<boolean>(false);
+	const [maxedOut, setMaxedOut] = useState<boolean>(false);
 
 	useEffect(() => {
 		clickRef?.on('csprclick:signed_in', (evt: any) => {
@@ -49,22 +51,38 @@ const App = () => {
 		});
 	}, [clickRef?.on]);
 
+	function userCheck() {
+		checkUser(activeAccount.public_key)
+			.then(hasClaimed => {
+				setClaimed(hasClaimed);
+			})
+			.catch(error => {
+				console.error(error.message);
+			});
+	}
+
+	useEffect(() => {
+		checkMax()
+			.then(maxedOut => {
+				setMaxedOut(maxedOut);
+			})
+			.catch(error => {
+				console.error(error.message);
+			});
+	});
+
 	useEffect(() => {
 		if (activeAccount !== null) {
-			checkUser(activeAccount.public_key)
-				.then(hasClaimed => {
-					setClaimed(hasClaimed);
-				})
-				.catch(error => {
-					console.error(error.message);
-				});
+			userCheck();
 		} else {
 			setClaimed(false);
 		}
 	}, [activeAccount]);
 
 	let contentElement = <Instructions setClaimed={setClaimed} />;
-	if (claimed) {
+	if (maxedOut) {
+		contentElement = <Maxed />;
+	} else if (claimed) {
 		contentElement = <Success />;
 	}
 

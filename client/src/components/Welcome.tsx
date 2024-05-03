@@ -23,6 +23,9 @@ const HeadingContainer = styled.div(({ theme }) =>
 		margin: 'auto',
 		marginTop: ['80px', '50px', 0],
 		textAlign: 'center',
+		h2: {
+			color: 'white',
+		},
 	})
 );
 
@@ -31,7 +34,6 @@ const StyledLogo = styled.img(({ theme }) =>
 		position: 'relative',
 		top: 30,
 		left: 30,
-		//transform: 'translateX(-50%)',
 		width: '200px',
 		objectFit: 'contain',
 	})

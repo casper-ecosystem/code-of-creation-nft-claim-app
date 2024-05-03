@@ -17,6 +17,11 @@ export const Routes = [{
     action: "check"
 }, {
     method: "get",
+    route: "/max",
+    controller: UserController,
+    action: "max"
+}, {
+    method: "get",
     route: "/destroy",
     controller: UserController,
     action: "destroy"
