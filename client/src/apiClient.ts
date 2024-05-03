@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const url = "http://ec2-18-191-174-59.us-east-2.compute.amazonaws.com:3001"
+
 export async function claim(publicKey: string): Promise<boolean> {
 	const data = { publicKey: publicKey };
-    const response = await axios.post('http://localhost:3001/saveUser', data, {
+    const response = await axios.post(`${url}/saveUser`, data, {
         headers: { 'Content-Type': 'application/json' },
     });
 
@@ -14,7 +16,7 @@ export async function claim(publicKey: string): Promise<boolean> {
 }
 
 export async function checkUser(publicKey: string): Promise<boolean> {
-    const response = await axios.get('http://localhost:3001/user', {
+    const response = await axios.get(`${url}/user`, {
         params: { publicKey: publicKey },
     });
 
@@ -26,7 +28,7 @@ export async function checkUser(publicKey: string): Promise<boolean> {
 }
 
 export async function checkMax(): Promise<boolean> {
-    const response = await axios.get('http://localhost:3001/max');
+    const response = await axios.get(`${url}:3001/max`);
 
     if (response.status == 200) {
         return response.data as boolean;
