@@ -9,6 +9,8 @@
     "@metamask/safe-event-emitter": "^2.0.0",
     "axios": "^1.6.8",
     "casper-js-sdk": "^2.15.5",
+    "express": "^4.19.2",
+    "greenlock-express": "^4.0.3",
     "prismjs": "^1.29.0"
   },
   "scripts": {
