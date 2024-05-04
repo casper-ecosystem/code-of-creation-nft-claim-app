@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = "http://ec2-18-191-174-59.us-east-2.compute.amazonaws.com:3001"
+const url = ""
 
 export async function claim(publicKey: string): Promise<boolean> {
 	const data = { publicKey: publicKey };
@@ -28,7 +28,7 @@ export async function checkUser(publicKey: string): Promise<boolean> {
 }
 
 export async function checkMax(): Promise<boolean> {
-    const response = await axios.get(`${url}:3001/max`);
+    const response = await axios.get(`${url}/max`);
 
     if (response.status == 200) {
         return response.data as boolean;

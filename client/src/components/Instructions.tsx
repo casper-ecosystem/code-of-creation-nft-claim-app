@@ -42,7 +42,11 @@ export default function Instructions(props: InstructionsProps) {
 	}
 
 	async function connectWallet() {
-		console.log(await clickRef?.signIn());
+		if (!(await clickRef?.isProviderPresent('casper-wallet'))) {
+			alert('Please visit this website from the browser in the Casper Wallet app to sign in.');
+			return;
+		}
+		console.log(await clickRef?.connect('casper-wallet'));
 	}
 
 	function openCasperWalletInstall() {

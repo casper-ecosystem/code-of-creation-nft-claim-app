@@ -8,7 +8,8 @@ const Container = styled.div(({ theme }) =>
 		backgroundImage: `url("${background}")`,
 		backgroundRepeat: 'no-repeat',
 		backgroundSize: 'cover',
-		backgroundPosition: ['top 50% center', 'top 80% center', 'center', 'top 35% center'],
+		//backgroundPosition: ['top 50% center', 'top 80% center', 'center', 'top 35% center'],
+		backgroundPosition: ['top 50% center', 'top 80% center', 'bottom 30% center'],
 		position: 'absolute',
 		top: 40,
 		left: 0,
@@ -26,6 +27,10 @@ const HeadingContainer = styled.div(({ theme }) =>
 		h2: {
 			color: 'white',
 		},
+		position: 'absolute',
+		bottom: [80, 50],
+		left: '50%',
+		transform: 'translateX(-50%)',
 	})
 );
 
@@ -44,7 +49,7 @@ export const Welcome = () => {
 		<Container>
 			<StyledLogo src={logo} />
 			<HeadingContainer>
-				<h2>A Collaboration between Dario De Siena & Casper.Network</h2>
+				<h2>A Collaboration between Dario De Siena & Casper Network</h2>
 			</HeadingContainer>
 		</Container>
 	);
