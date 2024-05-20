@@ -3,6 +3,7 @@ import { useClickRef } from '@make-software/csprclick-ui';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { ActiveAccountContext, StyledContentContainer } from '../App';
 import { claim } from '../apiClient';
+import { isMobile } from 'react-device-detect';
 
 const StyledStepContainer = styled.div(({ theme }) =>
 	theme.withMedia({
@@ -43,10 +44,14 @@ export default function Instructions(props: InstructionsProps) {
 
 	async function connectWallet() {
 		if (!(await clickRef?.isProviderPresent('casper-wallet'))) {
-			alert('Please visit this website from the browser in the Casper Wallet app to sign in.');
-			return;
+			if (isMobile || 'ontouchstart' in document.documentElement) {
+				window.location.href = 'casperwallet://download?browse=casper.dariodesiena.com&click=connect';
+			} else {
+				await clickRef?.signIn();
+			}
+		} else {
+			await clickRef?.connect('casper-wallet');
 		}
-		console.log(await clickRef?.connect('casper-wallet'));
 	}
 
 	function openCasperWalletInstall() {
