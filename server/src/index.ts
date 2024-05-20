@@ -13,6 +13,20 @@ AppDataSource.initialize().then(async () => {
     app.use(cors());
     app.use(bodyParser.json())
 
+    const redirectMiddleware = (req, res, next) => {
+	    // Check if the host starts with "www."
+	    if (req.hostname.startsWith("www.")) {
+            console.log(`https://${req.hostname.substr(4)}${req.originalUrl}`)
+		// Redirect to the same URL without "www."
+		    return res.redirect(301, `https://${req.hostname.substr(4)}${req.originalUrl}`);
+	    }
+	    // If the host doesn't start with "www.", move to the next middleware
+	    next();
+    };
+
+    // Mount the middleware
+    app.use(redirectMiddleware);
+
     // register express routes from defined application routes
     Routes.forEach(route => {
         (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
@@ -26,12 +40,20 @@ AppDataSource.initialize().then(async () => {
         })
     })
 
-    // setup express app here
-    // ...
+    app.use(express.static("../client/build"));
+
+    // All other routes serve the React app's index.html
+    app.get("/", (req, res) => {
+	    res.sendFile("../client/build/index.html");
+    });
 
     // start express server
-    app.listen(3001)
+    require('greenlock-express').init({
+        packageRoot: "./",
+        configDir: "../greenlock.d",
+        maintainerEmail: "dylan@casper.network",
+        cluster: false
+    }).serve(app);
 
-    console.log("Express server has started on port 3001. Open http://localhost:3001/users to see results")
 
 }).catch(error => console.log(error))

@@ -56,6 +56,8 @@ export class UserController {
     }
 
     async destroy(request: Request, response: Response, next: NextFunction) {
+        response.sendStatus(403);
+        return
         await this.userRepository.clear()
         response.sendStatus(200);
     }

@@ -5,3 +5,7 @@ logo.ai
 /client/greenlock.d/accounts/
 /client/greenlock.d/live/
 /client/greenlock.d/config.json.bak
+/server/greenlock.d/accounts/
+/server/greenlock.d/live/
+/server/greenlock.d/config.json.bak
+node_modules/
